@@ -22,6 +22,10 @@ module Brical
 
     get "/:org.ical" do
       calendar = Icalendar::Calendar.new
+      calendar.product_id = "cityofremo.com/ical"
+      calendar.custom_property("X-WR-CALNAME;VALUE=TEXT", "City of Remo 2009")
+      calendar.custom_property("X-WR-TIMEZONE;VALUE=TEXT", "US/Pacific")
+            
       feed.entries.each do |entry|
         ev = EbEvent.new(entry)
 
