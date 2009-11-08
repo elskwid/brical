@@ -1,20 +1,28 @@
+require File.dirname(__FILE__) + "/../lib/brical"
+require File.dirname(__FILE__) + "/../lib/eb_event"
+
 require "test/unit"
-
-require File.dirname(__FILE__) + "/../lib/github_calendar"
-require "sinatra/test"
-
-require "rubygems"
-require "context"
-require "matchy"
-require "mocha"
+require "rack/test"
 
 module TestHelper
-  def fixture(login)
-    File.read(File.dirname(__FILE__) + "/fixtures/#{login}.atom")
+  def org_id
+    "339849409"
+  end
+  
+  def atom_feed
+    File.read(File.dirname(__FILE__) + "/fixtures/#{org_id}.atom")
   end
 end
 
 class Test::Unit::TestCase
   include TestHelper
-  include Sinatra::Test
+  include Rack::Test::Methods
+end
+
+class Brical::App
+  include TestHelper
+  
+  def feed
+    Atom::Feed.new(atom_feed)
+  end
 end

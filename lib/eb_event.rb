@@ -8,22 +8,17 @@ module Brical
                 :stripped_content,
                 :content,
                 :id,
+                :published,
+                :updated,
                 :title,
                 :summary,
+                :content,
                 :links,
-                :published,
                 :when,
                 :where,
                 :start,
-                :end,
-                :updated
+                :end
                 
-
-    # helpful for dealing with ical
-    alias_method :details, :summary
-    alias_method :dtstart, :start
-    alias_method :dtend, :end
-    alias_method :dtstamp, :published
 
     # takes an atom feed object
     def initialize(entry)
@@ -32,10 +27,10 @@ module Brical
       @stripped_content = @raw_content.gsub(/<br\s?\/?>/,"\n").gsub(/<\/?[^>]*>/, "")
       @content          = @raw_content
       @id               = entry.id ? entry.id.strip : ""
-      @title            = entry.title ? entry.title.strip : ""
-      @links            = entry.links
       @published        = entry.published
       @updated          = entry.updated
+      @title            = entry.title ? entry.title.strip : ""
+      @links            = entry.links
       parse_when
       parse_where
       parse_details #summary
@@ -51,8 +46,8 @@ module Brical
       s << "links: #{@entry.links}\n"
       s << "when: #{@when}\n"
       s << "where: #{@where}\n"
-      s << "dtstart: #{dtstart}\n"
-      s << "dtend: #{dtend}\n"
+      s << "dtstart: #{@start}\n"
+      s << "dtend: #{@end}\n"
       s << "updated: #{updated}\n"
       s << "description: #{raw_content}\n"
       s
@@ -67,8 +62,8 @@ module Brical
       s << "<li>links: #{@entry.links}</li>"
       s << "<li>when: #{@when}</li>"
       s << "<li>where: #{@where}</li>"
-      s << "<li>start: #{dtstart}</li>"
-      s << "<li>end: #{dtend}</li>"
+      s << "<li>start: #{@start}</li>"
+      s << "<li>end: #{@end}</li>"
       s << "<li>updated: #{updated}</li>"
       s << "<li>description:<br> #{raw_content}</li>"
       s << "</ul>"

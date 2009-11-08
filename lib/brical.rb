@@ -20,24 +20,26 @@ module Brical
       calendar = Icalendar::Calendar.new
       feed.entries.each do |entry|
         ev = EbEvent.new(entry)
-    
+
         calendar.event do
           summary     ev.title
           description ev.summary
           location    ev.where
           url         ev.links.join(",")
           uid         ev.id
-          dtstart     ev.dtstart
-          dtend       ev.dtend
+          dtstart     ev.start
+          dtend       ev.end
           dtstamp     ev.published
           klass       "PUBLIC"
         end
+        
       end
 
       content_type "text/calendar"
       body         calendar.to_ical
     end
 
+    # just dump out html so we can see something
     get "/:org" do
       out = ""
       feed.entries.each do |e|
