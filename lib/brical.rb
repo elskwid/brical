@@ -50,8 +50,14 @@ module Brical
       out
     end
     
+    # nothing here
+    get '/favicon.ico' do
+    end
+    
     def feed
-      @feed ||= Atom::Feed.new(open("http://www.eventbrite.com/atom/organizer_list_events/#{params[:org]}").read)
+      url = "http://www.eventbrite.com/atom/organizer_list_events/#{params[:org]}"
+      puts "** fetching #{url}"
+      @feed ||= Atom::Feed.new(open(url).read)
     end
   end
   
