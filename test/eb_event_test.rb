@@ -54,4 +54,10 @@ class EbEventTest < Test::Unit::TestCase
   def test_end
     assert_equal "2009-11-11T22:00:00+00:00", entry.end.to_s
   end
+  
+  def test_split_dates
+    last = Brical::EbEvent.new(feed.entries.last)
+    assert_equal "2009-11-28T20:00:00+00:00", last.start.to_s
+    assert_equal "2009-11-29T00:00:00+00:00", last.end.to_s
+  end
 end

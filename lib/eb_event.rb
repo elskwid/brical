@@ -102,8 +102,8 @@ module Brical
             # dates[3] = end day and date
             # dates[4] = end time
             # dates[5] = time zone
-            @start = Time.parse("#{dates[1].strip} #{dates[2].strip}")
-            @end = Time.parse("#{dates[3].strip} #{dates[4].strip}")
+            @start = DateTime.parse("#{dates[1].strip} #{dates[2].strip}")
+            @end = DateTime.parse("#{dates[3].strip} #{dates[4].strip}")
           else
             # don't know this format
             @start = ""
