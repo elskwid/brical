@@ -16,6 +16,10 @@ module Brical
 
   class App < Sinatra::Base
 
+    get '/favicon.ico' do
+      # nothing here
+    end
+
     get "/:org.ical" do
       calendar = Icalendar::Calendar.new
       feed.entries.each do |entry|
@@ -48,10 +52,6 @@ module Brical
         out << ev.to_html
       end
       out
-    end
-    
-    # nothing here
-    get '/favicon.ico' do
     end
     
     def feed
